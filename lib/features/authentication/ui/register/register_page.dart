@@ -36,197 +36,195 @@ class _Register extends StatelessWidget {
                   AfterRegisterPage(phoneNumber: state.phoneNumber),
             ),
           );
-        }
-        else if (state is RegisterFailure) {
-          SnackBarMessage().showErrorSnackBar(context: context, msg: state.errorMessage);
+        } else if (state is RegisterFailure) {
+          SnackBarMessage()
+              .showErrorSnackBar(context: context, msg: state.errorMessage);
         }
       },
       child: Container(
         color: Colors.white12,
-        child: ListView(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(height: 32),
-                const Icon(
-                  Icons.local_grocery_store_outlined,
-                  size: 100,
-                  color: Colors.green,
-                ),
-                Container(height: 24),
-                const Text(
-                  'Tarwej',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                Container(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 48,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(height: 32),
+                  const Icon(
+                    Icons.local_grocery_store_outlined,
+                    size: 100,
+                    color: Colors.green,
+                  ),
+                  Container(height: 24),
+                  const Text(
+                    'Tarwej',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  Container(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: buildSocialLoginIcons(
                             Icons.wb_twilight,
                             color: Colors.blue,
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 48,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: buildSocialLoginIcons(
                             Icons.facebook_outlined,
                             color: Colors.blue,
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 48,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: buildSocialLoginIcons(
                             Icons.apple_outlined,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: CupertinoColors.inactiveGray.withOpacity(0.3),
+                        ),
+                      ),
+                      Container(width: 8),
+                      const Text(
+                        'or',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.grey),
+                      ),
+                      Container(width: 8),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: CupertinoColors.inactiveGray.withOpacity(0.3),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        color: CupertinoColors.inactiveGray.withOpacity(0.3),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const RegisterForm(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
                       ),
-                    ),
-                    Container(width: 8),
-                    const Text(
-                      'or',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.grey),
-                    ),
-                    Container(width: 8),
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        color: CupertinoColors.inactiveGray.withOpacity(0.3),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const RegisterForm(),
-                const SizedBox(
-                  height: 8,
-                ),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                    children: [
-                      const TextSpan(
-                          text: 'By creating an account, you agree to the ',
+                      children: [
+                        const TextSpan(
+                            text: 'By creating an account, you agree to the ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            )),
+                        WidgetSpan(
+                          child: InkWell(
+                            onTap: () {
+                              SnackBarMessage().showSuccessSnackBar(
+                                  context: context,
+                                  msg: 'Will implement that later');
+                            },
+                            child: const Text(
+                              'privacyPolicy ',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ),
+                        const TextSpan(
+                          text: 'and ',
                           style: TextStyle(
                             color: Colors.black,
-                          )),
-                      WidgetSpan(
-                        child: InkWell(
-                          onTap: () {
-                            SnackBarMessage().showSuccessSnackBar(context: context, msg: 'Will implement that later');
-                          },
-                          child: const Text(
-                            'privacyPolicy ',
-                            style: TextStyle(
-                                color: Colors.green,
-                                decoration: TextDecoration.underline),
                           ),
                         ),
-                      ),
-                      const TextSpan(
-                        text: 'and ',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      WidgetSpan(
-                        child: InkWell(
-                          onTap: () {
-                            SnackBarMessage().showErrorSnackBar(context: context, msg: 'Will implement that later');
-                          },
-                          child: const Text(
-                            'terms of use ',
-                            style: TextStyle(
-                                color: Colors.green,
-                                decoration: TextDecoration.underline),
+                        WidgetSpan(
+                          child: InkWell(
+                            onTap: () {
+                              SnackBarMessage().showErrorSnackBar(
+                                  context: context,
+                                  msg: 'Will implement that later');
+                            },
+                            child: const Text(
+                              'terms of use ',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  decoration: TextDecoration.underline),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const Text(
-                  'do you have an account?',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                AppButton(
-                  title: 'Login',
-                  function: () {
-                    SnackBarMessage().showSuccessSnackBar(context: context, msg: 'Will implement that later');
-                  },
-                  height: 50,
-                  fontWeight: FontWeight.bold,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  borderRadius: 8,
-                  fontSize: 16,
-                  buttonColor: Colors.deepPurple,
-                  textColor: Colors.white,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-              ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Text(
+                    'do you have an account?',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  AppButton(
+                    title: 'Login',
+                    function: () {
+                      SnackBarMessage().showSuccessSnackBar(
+                          context: context, msg: 'Will implement that later');
+                    },
+                    height: 50,
+                    fontWeight: FontWeight.bold,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    borderRadius: 8,
+                    fontSize: 16,
+                    buttonColor: Colors.deepPurple,
+                    textColor: Colors.white,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildSocialLoginIcons(IconData icon, {Color? color}) {
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
+      child: Icon(
+        icon,
+        color: color ?? Colors.black,
       ),
     );
   }
@@ -353,7 +351,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           BlocBuilder<RegisterBloc, RegisterState>(
             builder: (context, state) {
-              if(state is RegisterLoading){
+              if (state is RegisterLoading) {
                 return buildLoadingProgressWidget();
               }
               return AppButton(
@@ -376,4 +374,3 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 }
-

@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
       return RegisterBloc();
     },child: const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       home: RegisterPage(),
     ),);
   }

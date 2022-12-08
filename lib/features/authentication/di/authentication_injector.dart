@@ -10,7 +10,6 @@ class AuthenticationDi {
   static Future<void>initialize() async {
     // register bloc
 
-
     // register useCase
 
     injector.registerFactory(() => RegisterUseCase(injector()));
