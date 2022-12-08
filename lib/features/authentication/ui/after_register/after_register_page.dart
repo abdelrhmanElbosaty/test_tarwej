@@ -7,10 +7,16 @@ class AfterRegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        phoneNumber,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.cyanAccent[200],
+        elevation: 0,
+      ),
+      body: Center(
+        child: Text(
+          phoneNumber,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

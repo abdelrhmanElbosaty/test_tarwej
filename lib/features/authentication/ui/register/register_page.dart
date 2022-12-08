@@ -7,6 +7,8 @@ import 'package:test_tarwej/features/authentication/ui/register/register_bloc.da
 import 'package:test_tarwej/features/authentication/ui/register/register_event.dart';
 import 'package:test_tarwej/utils/app_button.dart';
 import 'package:test_tarwej/utils/app_text_field.dart';
+import 'package:test_tarwej/utils/snack_bar.dart';
+import 'package:test_tarwej/utils/widgets.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -34,22 +36,19 @@ class _Register extends StatelessWidget {
                   AfterRegisterPage(phoneNumber: state.phoneNumber),
             ),
           );
-        } else if (state is RegisterLoading) {
-          buildLoadingProgressWidget();
-        } else if (state is RegisterFailure) {
-          print(state.errorMessage);
+        }
+        else if (state is RegisterFailure) {
+          SnackBarMessage().showErrorSnackBar(context: context, msg: state.errorMessage);
         }
       },
       child: Container(
         color: Colors.white12,
-        //padding: EdgeInsets.symmetric(horizontal: 8,vertical: 32),
         child: ListView(children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Spacer(),
                 Container(height: 32),
                 const Icon(
                   Icons.local_grocery_store_outlined,
@@ -76,7 +75,7 @@ class _Register extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: const Icon(
-                            Icons.add,
+                            Icons.wb_twilight,
                             color: Colors.blue,
                           ),
                         ),
@@ -128,13 +127,13 @@ class _Register extends StatelessWidget {
                         color: CupertinoColors.inactiveGray.withOpacity(0.3),
                       ),
                     ),
-                    Container(width: 4),
+                    Container(width: 8),
                     const Text(
                       'or',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.grey),
                     ),
-                    Container(width: 4),
+                    Container(width: 8),
                     Expanded(
                       child: Container(
                         height: 1,
@@ -165,7 +164,9 @@ class _Register extends StatelessWidget {
                           )),
                       WidgetSpan(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            SnackBarMessage().showSuccessSnackBar(context: context, msg: 'Will implement that later');
+                          },
                           child: const Text(
                             'privacyPolicy ',
                             style: TextStyle(
@@ -182,7 +183,9 @@ class _Register extends StatelessWidget {
                       ),
                       WidgetSpan(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            SnackBarMessage().showErrorSnackBar(context: context, msg: 'Will implement that later');
+                          },
                           child: const Text(
                             'terms of use ',
                             style: TextStyle(
@@ -206,7 +209,9 @@ class _Register extends StatelessWidget {
                 ),
                 AppButton(
                   title: 'Login',
-                  function: () {},
+                  function: () {
+                    SnackBarMessage().showSuccessSnackBar(context: context, msg: 'Will implement that later');
+                  },
                   height: 50,
                   fontWeight: FontWeight.bold,
                   width: MediaQuery.of(context).size.width * 0.4,
@@ -305,12 +310,12 @@ class _RegisterFormState extends State<RegisterForm> {
           AppTextFormField.textForm(
             _phoneController,
             TextInputType.phone,
-            // validate: (String value) {
-            //   if (value.isEmpty) {
-            //     return 'Please enter Name';
-            //   }
-            //   return null;
-            // },
+            validate: (value) {
+              if (value?.isEmpty ?? false) {
+                return 'Please enter phone';
+              }
+              return null;
+            },
           ),
           Container(
             height: 16,
@@ -325,12 +330,12 @@ class _RegisterFormState extends State<RegisterForm> {
           AppTextFormField.textForm(
             _passwordController,
             TextInputType.name,
-            // validate: (String value) {
-            //   if (value.isEmpty) {
-            //     return 'Please enter Name';
-            //   }
-            //   return null;
-            // },
+            validate: (value) {
+              if (value?.isEmpty ?? false) {
+                return 'Please enter Password';
+              }
+              return null;
+            },
             suffix: IconButton(
               onPressed: () {
                 setState(() {
@@ -348,6 +353,9 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           BlocBuilder<RegisterBloc, RegisterState>(
             builder: (context, state) {
+              if(state is RegisterLoading){
+                return buildLoadingProgressWidget();
+              }
               return AppButton(
                 title: 'Register',
                 function: () {
@@ -369,10 +377,3 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 }
 
-Widget buildLoadingProgressWidget() {
-  return const Center(
-    child: CircularProgressIndicator(
-      color: Colors.orange,
-    ),
-  );
-}
