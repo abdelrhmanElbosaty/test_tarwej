@@ -1,19 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_tarwej/di.dart';
+import 'package:test_tarwej/features/main_home/data/models/all_section/api_all_section_result.dart';
+import 'package:test_tarwej/features/main_home/ui/user_home/home_cubit.dart';
 import 'package:test_tarwej/utils/app_button.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AfterRegisterPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final String phoneNumber;
 
-  const AfterRegisterPage({super.key, required this.phoneNumber});
+  const HomePage({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildApBar(),
-      body: const SafeArea(child: UserHome()),
+      body: BlocProvider(
+        create: (context) {
+          return HomeCubit(injector())..getAllCategory();
+        },
+        child: const SafeArea(child: UserHome()),
+      ),
     );
   }
 
@@ -62,6 +71,17 @@ class _UserHomeState extends State<UserHome> {
     'Self_Care',
     'Jewellery',
     'Furniture',
+    'Bags',
+    'Accessories',
+    'Self_Care',
+    'Jewellery',
+    'Furniture',
+    'Furniture',
+    'Bags',
+    'Accessories',
+    'Self_Care',
+    'Jewellery',
+    'sdfsdfsdfdsfsde',
   ];
 
   int _selectedIndex = 0;
@@ -74,20 +94,34 @@ class _UserHomeState extends State<UserHome> {
         const SizedBox(
           height: 16,
         ),
-        SizedBox(
-          height: 90,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return _buildFirstSectionItem();
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 8,
+        BlocConsumer<HomeCubit, HomeState>(
+          listener: (context, state) {
+            if (state is HomeCategoryError) {
+              print(state.errorMessage);
+            }
+          },
+          builder: (context, state) {
+            if (state is HomeCategorySuccess) {
+              return SizedBox(
+                height: 90,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return _buildFirstSectionItem(
+                        category: state.category[index]);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      width: 8,
+                    );
+                  },
+                  itemCount: state.category.length,
+                ),
               );
-            },
-            itemCount: 9,
-          ),
+            } else {
+              return SizedBox();
+            }
+          },
         ),
         const SizedBox(
           height: 16,
@@ -99,7 +133,10 @@ class _UserHomeState extends State<UserHome> {
             children: [
               _buildSideTitle('Stores'),
               const Spacer(),
-              _buildSideButton(title: 'see more',onTap: (){},),
+              _buildSideButton(
+                title: 'see more',
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -134,7 +171,10 @@ class _UserHomeState extends State<UserHome> {
             children: [
               _buildSideTitle('Ads'),
               const Spacer(),
-              _buildSideButton(title: 'see more',onTap: (){},),
+              _buildSideButton(
+                title: 'see more',
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -216,21 +256,22 @@ class _UserHomeState extends State<UserHome> {
               //     return _buildAdsSectionItem();
               //   },
               // ),
-                Column(
-                  children: [
-                    AlignedGridView.count(
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      crossAxisCount: 2 ,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 8,
-                      itemBuilder: (context, index) {
-                      return _buildAdsSectionItem();
-                    },),
-                  ],
-                ),
+              Column(
+            children: [
+              AlignedGridView.count(
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return _buildAdsSectionItem();
+                },
+              ),
+            ],
           ),
+        ),
         const SizedBox(
           height: 16,
         ),
@@ -241,7 +282,10 @@ class _UserHomeState extends State<UserHome> {
             children: [
               _buildSideTitle('Most Sailed'),
               const Spacer(),
-              _buildSideButton(title: 'see more',onTap: (){},),
+              _buildSideButton(
+                title: 'see more',
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -288,7 +332,10 @@ class _UserHomeState extends State<UserHome> {
             children: [
               _buildSideTitle('best Sales'),
               const Spacer(),
-              _buildSideButton(title: 'see more',onTap: (){},),
+              _buildSideButton(
+                title: 'see more',
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -317,15 +364,17 @@ class _UserHomeState extends State<UserHome> {
     );
   }
 
-  Widget _buildFirstSectionItem() {
+  Widget _buildFirstSectionItem({required Category category}) {
     return Column(
-      children: const [
-        Icon(
-          Icons.ac_unit,
-          color: Colors.black,
-          size: 68,
+      children: [
+        FadeInImage.assetNetwork(
+          image: category.thumbnail!,
+          placeholder: 'assets/images/image.png',
+          width: 45,
+          height: 45,
+          fit: BoxFit.fill,
         ),
-        Text('Jewellery'),
+        Text(category.enName!),
       ],
     );
   }
@@ -367,7 +416,10 @@ class _UserHomeState extends State<UserHome> {
             ),
             const Text('New Damietta'),
             const Spacer(),
-            _buildSideButton(title: 'Follow',onTap: (){},),
+            _buildSideButton(
+              title: 'Follow',
+              onTap: () {},
+            ),
           ],
         ),
       ),
@@ -413,7 +465,7 @@ class _UserHomeState extends State<UserHome> {
             ),
             RichText(
               text: const TextSpan(
-                style:TextStyle(
+                style: TextStyle(
                   color: Colors.green,
                 ),
                 children: [
@@ -500,7 +552,9 @@ class _UserHomeState extends State<UserHome> {
 
   Widget _buildSideButton({required title, required Function onTap}) {
     return AppButton(
-        function: (){onTap();},
+        function: () {
+          onTap();
+        },
         title: title,
         fontSize: 16,
         buttonColor: Colors.greenAccent,

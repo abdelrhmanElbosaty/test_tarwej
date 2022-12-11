@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_tarwej/features/authentication/domain/Entity/register/register_model.dart';
 import 'package:test_tarwej/features/authentication/ui/register/register_bloc.dart';
 import 'package:test_tarwej/features/authentication/ui/register/register_event.dart';
-import 'package:test_tarwej/features/authentication/ui/user_home/after_register_page.dart';
+import 'package:test_tarwej/features/main_home/ui/user_home/home_page.dart';
 import 'package:test_tarwej/utils/app_button.dart';
 import 'package:test_tarwej/utils/app_text_field.dart';
 import 'package:test_tarwej/utils/snack_bar.dart';
@@ -33,7 +33,7 @@ class _Register extends StatelessWidget {
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  AfterRegisterPage(phoneNumber: state.phoneNumber),
+                  HomePage(phoneNumber: state.phoneNumber),
             ),
           );
         } else if (state is RegisterFailure) {

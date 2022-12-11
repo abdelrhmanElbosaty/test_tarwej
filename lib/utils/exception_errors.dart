@@ -40,14 +40,14 @@ Future<void> collect<T>({
     }
   } on ServerException catch(e) {
     if (onError != null) {
-      onError("CommonLocalizer.serverError");
+      onError(e.toString());
     }
     if (catchError != null) {
       catchError(e);
     }
   } catch(e) {
     if (onError != null) {
-      onError("CommonLocalizer.unexpectedError");
+      onError(e.toString());
     }
     if (catchError != null) {
       catchError(e);

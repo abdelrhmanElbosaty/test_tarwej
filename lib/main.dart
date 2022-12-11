@@ -3,6 +3,7 @@ import 'package:test_tarwej/di.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_tarwej/features/authentication/ui/register/register_bloc.dart';
 import 'package:test_tarwej/features/authentication/ui/register/register_page.dart';
+import 'package:test_tarwej/features/main_home/ui/user_home/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       return RegisterBloc();
     },child: const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
+      home: HomePage(phoneNumber: 'sdfsdf',),
     ),);
   }
 }
