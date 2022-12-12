@@ -1,3 +1,4 @@
+import 'package:test_tarwej/features/main_home/data/models/all_section/api_ads_result.dart';
 import 'package:test_tarwej/features/main_home/domain/reposatories/home_repository.dart';
 
 class GetSpecialAdsUseCase {
@@ -5,7 +6,7 @@ class GetSpecialAdsUseCase {
 
   GetSpecialAdsUseCase(this._homeRepository);
 
-  Future<void>excute() async {
-    await _homeRepository.getSpecialAds();
+  Future<List<Ads>>excute() async {
+   return  await _homeRepository.getSpecialAds();
   }
 }

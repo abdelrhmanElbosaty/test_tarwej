@@ -1,21 +1,81 @@
+
 part of 'home_cubit.dart';
 
-abstract class HomeState {
-  const HomeState();
-}
+// old way
+// abstract class HomeState {
+//   const HomeState();
+// }
+//
+// class HomeInitial extends HomeState { }
+//
+// class HomeCategorySuccess extends HomeState {
+//  final List<Category> category;
+//
+//   HomeCategorySuccess(this.category);
+// }
+//
+// class HomeCategoryLoading extends HomeState {}
+//
+// class HomeCategoryError extends HomeState {
+//   final String errorMessage;
+//
+//   HomeCategoryError(this.errorMessage);
+// }
+//
+// class HomeFeaturedStoresSuccess extends HomeState {
+//   final List<Store> store;
+//
+//   HomeFeaturedStoresSuccess(this.store);
+// }
+//
+// class HomeFeaturedStoresLoading extends HomeState {}
+//
+// class HomeFeaturedStoresError extends HomeState {
+//   final String errorMessage;
+//
+//   HomeFeaturedStoresError(this.errorMessage);
+// }
 
-class HomeInitial extends HomeState { }
+class HomeState extends Equatable {
 
-class HomeCategorySuccess extends HomeState {
- final List<Category> category;
+  final String? errorMessage;
+  final Async<List<Category>> category;
+  final Async<List<s.Store>> store;
+  final Async<List<Ads>> ads;
 
-  HomeCategorySuccess(this.category);
-}
+  const HomeState(this.errorMessage, this.category, this.store, this.ads);
 
-class HomeCategoryLoading extends HomeState {}
+  const HomeState.initial()
+      : this(
+    null,
+    const Async.initial(),
+    const Async.initial(),
+    const Async.initial(),
+  );
 
-class HomeCategoryError extends HomeState {
-  final String errorMessage;
+  HomeState reduce({
+    String? errorMessage,
+    Async<List<Category>>? category,
+    Async<List<s.Store>>? store,
+    Async<List<Ads>>? ads,
+  }) {
+    return HomeState(
+      errorMessage,
+      category ?? this.category,
+      store ?? this.store,
+      ads ?? this.ads,
+    );
+  }
 
-  HomeCategoryError(this.errorMessage);
+  HomeState reduceToFailures({String? errorMessage}) {
+    return HomeState(
+      errorMessage,
+      category.isLoading ? const Async.failure("Error") : category,
+      store.isLoading ? const Async.failure("Error") : store,
+      ads.isLoading ? const Async.failure("Error") : ads,
+    );
+  }
+
+  @override
+  List<Object?> get props => [errorMessage,category,store,ads];
 }
